@@ -32,11 +32,18 @@
         	<property name="modulePath">D:\Software\JavaEE Servers\wildfly-9.0.2.Final\modules</property>
 		</configuration> -->
 		
-		<configuration>
+		<!-- <configuration>
 			<property name="managementAddress">127.0.0.1</property>
 			<property name="managementPort">9990</property>
 			<property name="username">root</property>
 			<property name="password">root</property>
+		</configuration> -->
+		
+		<configuration>
+			<property name="managementAddress">10.2.200.75</property>
+			<property name="managementPort">19990</property>
+			<property name="username">admin</property>
+			<property name="password">admin</property>
 		</configuration>
 	</container>
 

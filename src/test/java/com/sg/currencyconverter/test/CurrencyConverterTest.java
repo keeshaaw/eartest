@@ -9,6 +9,7 @@ import org.jboss.arquillian.container.test.api.Testable;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.Assert;
@@ -20,10 +21,12 @@ public class CurrencyConverterTest extends Arquillian {
 
 	@Deployment
 	public static EnterpriseArchive createDeployment(){
-		return ShrinkWrap.createFromZipFile(EnterpriseArchive.class, new File("../earapp/target/earapp-0.0.1-SNAPSHOT.ear"))
+		EnterpriseArchive ear = ShrinkWrap.createFromZipFile(EnterpriseArchive.class, new File("../earapp/target/earapp-0.0.1-SNAPSHOT.ear"))
 				.addAsModule(Testable.archiveToTest(ShrinkWrap.create(WebArchive.class, "test.war")
 						.addClass(CurrencyConverterTest.class)
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")));
+		ear.as(ZipExporter.class).exportTo(new File("earapp.ear"), true);
+		return ear;
 	}
 	
 	@EJB(lookup="java:app/currencyconverter-0.0.1-SNAPSHOT/ConverterBean!com.sg.currencyconverter.IConverterBean")
